@@ -1,6 +1,6 @@
 # Ajax-SEO
 
-SEO for AngularJS apps made easy
+SEO for apps made easy
 
 ## Requirements
 
