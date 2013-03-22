@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Ajax-seo by alexferreira</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Ajax-seo</h1>
+        <h2></h2>
+        <a href="https://github.com/alexferreira/ajax-seo" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Ajax-SEO</h1>
+
+<p>SEO for apps made easy</p>
+
+<h2>Requirements</h2>
+
+<p>You will need <a href="http://phantomjs.org/">PhantomJS</a> to make this work, as it will render the application to HTML.</p>
+
+<h2>Modifying your static HTML</h2>
+
+<p>Just add this to your <code>&lt;head&gt;</code> to enable AJAX indexing by the crawlers.</p>
+
+<pre><code>    &lt;meta name="fragment" content="!" /&gt;
+</code></pre>
+
+<h2>EmberJs</h2>
+
+<p>Just add this to your <code>didInsertElement</code> the event to view in <code>ApplicationView</code></p>
+
+<pre><code>var App.ApplicationView = Ember.View.extend({
+  didInsertElement: function() {
+    var evt = document.createEvent('Event');
+    evt.initEvent('_htmlReady', true, true);
+    document.dispatchEvent(evt);
+  }
+});
+</code></pre>
+
+<h2>AngularJS Module</h2>
+
+<p>Just include <code>ajax-seo.js</code> and then add the <code>seo</code> module to you app:</p>
+
+<pre><code>angular.module('app', ['ng', 'seo']);
+</code></pre>
+
+<p>Then you must call <code>$scope.htmlReady()</code> when you think the page is complete. This is nescessary because of the async nature of AngularJS (such as with AJAX calls).</p>
+
+<pre><code>function MyCtrl($scope) {
+    Items.query({}, function(items) {
+        $scope.items = items;
+        $scope.htmlReady();
+    });
+}
+</code></pre>
+
+<p>And that's all there is to do on the app side.</p>
+
+<h2>PhantomJS Module</h2>
+
+<p>For the app to be properly rendered, you will need to run the <code>seo-server-phantom.js</code> with PhantomJS.
+Make sure to disable caching:</p>
+
+<pre><code>$ phantomjs --disk-cache=no seo-server-phantom.js [port] [URL prefix] [no Escape]
+</code></pre>
+
+<p><code>URL prefix</code> is the URL that will be prepended to the path the crawlers will try to get.</p>
+
+<p>Some examples:</p>
+
+<pre><code>$ phantomjs --disk-cache=no seo-server-phantom.js 8888 http://localhost:3000
+$ phantomjs --disk-cache=no seo-server-phantom.js 8888 file:///full/path/to/index.html
+</code></pre>
+
+<h2>Testing</h2>
+
+<p>So say you app is running on <code>http://localhost:3000/</code> (works with <code>file://</code> URLs too).
+First, run PhantomJS:</p>
+
+<h3>With Escaped Fragment</h3>
+
+<p>Google and Bing replace <code>#!</code> (hashbang) with <code>?_escaped_fragment_=</code> so <code>htttp://localhost/#!/profile</code> becomes <code>htttp://localhost/?_escaped_fragment_=/profile</code>.</p>
+
+<pre><code>$ phantomjs --disk-cache=no seo-server-phantom.js 8888 http://localhost:3000/
+Listening on 8888 OS: mac 10.8 (Mountain Lion) 32bit
+Press Ctrl+C to stop.
+</code></pre>
+
+<p>Then try with cURL:</p>
+
+<pre><code>$ curl 'http://localhost:8888/?_escaped_fragment_=/profile'
+</code></pre>
+
+<p>Then try with Browser:</p>
+
+<pre><code>$ open 'http://localhost:8888/?_escaped_fragment_=/profile'
+</code></pre>
+
+<h3>Without Escaped Fragment</h3>
+
+<pre><code>$ phantomjs --disk-cache=no seo-server-phantom.js 8888 http://localhost:3000/ --no-scape
+Listening on 8888 OS: mac 10.8 (Mountain Lion) 32bit
+Press Ctrl+C to stop.
+</code></pre>
+
+<p>Then try with cURL:</p>
+
+<pre><code>$ curl 'http://localhost:8888/profile'
+</code></pre>
+
+<p>Then try with Browser:</p>
+
+<pre><code>$ open 'http://localhost:8888/profile'
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/alexferreira/ajax-seo/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/alexferreira/ajax-seo/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/alexferreira/ajax-seo"></a> is maintained by <a href="https://github.com/alexferreira">alexferreira</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
