@@ -29,7 +29,7 @@ var renderHtml = function(url, cb) {
   page.settings.localToRemoteUrlAccessEnabled = true;
   page.onInitialized = function() {
     page.evaluate(function() {
-      document.addEventListener('__htmlReady__', function() {
+      document.addEventListener('_htmlReady', function() {
         window.callPhantom();
       }, false);
     });
