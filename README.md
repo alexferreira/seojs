@@ -107,4 +107,8 @@ $ open 'http://localhost:8888/profile'
 ```
 
 
+## License and Copyright
 
+[MIT Style License](http://opensource.org/licenses/MIT)
+
+Copyright &copy; 2013 [Alex Ferreira](http://www.alexferreira.eti.br)
