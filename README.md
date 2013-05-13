@@ -1,4 +1,4 @@
-# Ajax-SEO
+# SeoJs
 
 SEO for apps made easy
 
